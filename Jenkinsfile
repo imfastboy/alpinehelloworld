@@ -69,16 +69,16 @@ pipeline {
       }
 
       stage ('Login and Push Image on docker hub') {
-          agent any
-          steps {
-             script {
-               sh '''
-                   echo $DOCKERHUB_PASSWORD_PSW | docker login -u $DOCKERHUB_PASSWORD_USR --password-stdin
-                   docker push ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG
-               '''
-             }
-          }
-      }
+    agent any
+    steps {
+        script {
+            sh '''
+                echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_ID --password-stdin
+                docker push ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG
+            '''
+        }
+    }
+}
 
       stage('STAGING - Deploy app') {
       agent any
